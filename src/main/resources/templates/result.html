@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form>
+<p th:text="'ur tinyurl is, ' + ${tinyURL} + '!'" />
+<input type="text" th:value="*{tinyURL}">
+
+</form>
+</body>
+</html>

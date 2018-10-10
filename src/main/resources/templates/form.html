@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form action="/shorten" >
+    original URL:<br>
+    <input type="text" name="originalURL" ><br>
+    tiny URL:<br>
+    <input type="text" th:value="*{tinyURL}"><br>
+    <input type="button" name="">
+    <input type="submit" value="Convert">
+</form>
+<div class="start-video-converter start-video-converter-sml">
+    <span>Select files to start</span>
+    <div class="start-video-converter-bg"></div>
+    <div><script src="https://api.apowersoft.com/video-converter?lang=en" defer></script></div>
+</div></body>
+</html>
