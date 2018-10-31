@@ -1,5 +1,8 @@
 package com.project.project1.Utils;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Base62 {
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public static final int BASE62 = ALPHABET.length();

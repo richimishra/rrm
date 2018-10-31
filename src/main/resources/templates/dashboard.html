@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/uploadFile">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" th:value="Upload" /></td></tr>
+
+            <tr><td></td><td>Tiny URL:<input type="text" th:value="*{tinyURL}"></td></tr>
+
+
+        </table>
+    </form>
+</div>
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/showFile">
+        <table>
+
+            <tr><td>Files Uploaded:</td><td th:text="*{fileList}"></td></tr>
+
+        </table>
+    </form>
+</div>
+
+    <form method="POST" enctype="multipart/form-data" action="/deleteFile">
+        <table>
+            <tr><td>File to delete:</td><td><input type="text" name="url" /></td></tr>
+            <tr><td></td><td><input type="submit" th:value="Delete" /></td></tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

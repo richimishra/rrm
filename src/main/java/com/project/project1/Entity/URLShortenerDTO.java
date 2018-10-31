@@ -1,5 +1,10 @@
 package com.project.project1.Entity;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Entity;
+
+@Component
 public class URLShortenerDTO {
     private String id;
     private String originalURL;

@@ -31,8 +31,6 @@ public class URLService {
     public URLShortenerDTO getURL(String shortenURL) {
         URLShortenerDTO dto = new URLShortenerDTO();
         if (validateURL(shortenURL)) {
-            //Remove domain to shortened URL if possible.
-//            String str = shortenURL.replace(this.domain + "/", "");
 
             // Resolve a shortened URL to the initial ID.
             long id = Base62.toBase10(shortenURL);
