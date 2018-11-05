@@ -18,6 +18,6 @@ public interface URLRepository extends JpaRepository<URLShortener, Long> {
     Optional<URLShortener> findByOriginalURL(
             @Param(value = "originalURL") String originalURL);
 
-    @Query(nativeQuery = true, value = "SELECT nextval('seq_unique_id')")
+    @Query(nativeQuery = true, value = "SELECT nextval('url_id_seq')")
     Long getIdWithNextUniqueId();
 }

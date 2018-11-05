@@ -2,6 +2,7 @@ package com.project.project1.Controller;
 
 
 import com.amazonaws.services.s3.model.S3Object;
+import com.project.project1.Entity.User;
 import com.project.project1.Service.BucketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class BucketController {
 
     @Autowired
     private BucketService bucketService;
+    @Autowired
+    private static User user=new User();
 
     @Autowired
     BucketController(BucketService bucketService) {
@@ -30,10 +33,12 @@ public class BucketController {
     @PostMapping("/uploadFile")
     public String uploadFile(@RequestPart(value = "file") MultipartFile file, ModelMap modelMap) throws IOException {
         System.out.println("in controller");
+        System.out.println(user.getUser_id());
          String str= this.bucketService.uploadFile(file);
-
-         bucketService.save(file.getOriginalFilename());
-         modelMap.addAttribute("tinyURL",str);
+         String id=user.getUser_id();
+         System.out.println(id);
+        bucketService.save(id,file.getOriginalFilename());
+        modelMap.addAttribute("tinyURL",str);
         List<String> temp = this.bucketService.listFiles();
         modelMap.addAttribute("fileList",temp);
         return "dashboard";
@@ -60,10 +65,10 @@ public class BucketController {
     }
 
 
-    @GetMapping("/dashboard")
-    public String dashboard(  ) {
-
-
+    @GetMapping("/dashboard/{str}")
+    public String dashboard(@PathVariable String str) {
+        user.setUser_id(str);
+        System.out.println(str);
         return "dashboard";
     }
 

@@ -7,8 +7,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.S3Object;
 import com.project.project1.Entity.URLShortenerDTO;
 import com.project.project1.Entity.Videos;
-import com.project.project1.User.dao.MediaRepo;
-import com.project.project1.User.dao.UserRepo;
+import com.project.project1.Repository.MediaRepo;
+import com.project.project1.Repository.UserRepo;
 import com.project.project1.Utils.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,8 +37,8 @@ public class BucketService {
     BucketService(){
         this.initializeAmazon();}
 
-    private String accessKey ="AKIAIUX34GLWXN2DT5QA";
-    private String secretKey ="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";
+    private String accessKey ="AKIAJNHWYP6OXC5EWHFQ";
+    private String secretKey ="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";
 
 
     @PostConstruct
@@ -67,11 +67,12 @@ public class BucketService {
     return amazonClient.showObjects(s3client);
     }
 
-    public void save(String file) {
-        userRepo
-        Videos videos=new Videos(uid,video);
+    public void save(String id, String video) {
+        Videos videos=new Videos(id,video);
         mediaRepo.save(videos);
     }
+
+
 }
 
 

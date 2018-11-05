@@ -9,13 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "url")
+@Table(name = " urlshortener")
 public class URLShortener implements LogDomainConstants {
     @Id
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "original_url")
+    @Column(name = "originalurl")
     private String originalURL;
 
     public Long getId() {
