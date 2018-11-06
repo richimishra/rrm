@@ -3,6 +3,7 @@ package com.project.project1.Controller;
 
 import com.amazonaws.services.s3.model.S3Object;
 import com.project.project1.Entity.User;
+import com.project.project1.Entity.Videos;
 import com.project.project1.Service.BucketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,6 @@ public class BucketController {
     private BucketService bucketService;
     @Autowired
     private static User user=new User();
-
     @Autowired
     BucketController(BucketService bucketService) {
         this.bucketService = bucketService;
@@ -36,11 +36,15 @@ public class BucketController {
         System.out.println(user.getUser_id());
          String str= this.bucketService.uploadFile(file);
          String id=user.getUser_id();
-         System.out.println(id);
-        bucketService.save(id,file.getOriginalFilename());
+         bucketService.save(id,file.getOriginalFilename());
         modelMap.addAttribute("tinyURL",str);
-        List<String> temp = this.bucketService.listFiles();
-        modelMap.addAttribute("fileList",temp);
+        List<Videos> temp = this.bucketService.listFiles(user.getUser_id());
+        List<String> names = new ArrayList<>();
+        for (Videos videos : temp) {
+            names.add(videos.getVideo());
+        }
+        modelMap.addAttribute("fileList",names);
+
         return "dashboard";
     }
 
@@ -51,9 +55,9 @@ public class BucketController {
     }
     @PostMapping("/showFile")
     public String listFile(ModelMap modelMap) throws IOException {
-       List<String> temp = this.bucketService.listFiles();
 
-         modelMap.addAttribute("fileList",temp);
+        String str=user.getUser_id();
+        this.bucketService.listFiles(str);
         return "dashboard";
     }
     @PostMapping("/play")
@@ -64,11 +68,24 @@ public class BucketController {
         return "dashboard";
     }
 
+    @PostMapping("/download")
+    public String downloadFile(@RequestPart(value = "url") String key) throws IOException {
+        bucketService.downloadFile(key);
+        return "res";
+    }
+
 
     @GetMapping("/dashboard/{str}")
-    public String dashboard(@PathVariable String str) {
+    public String dashboard(@PathVariable String str, ModelMap modelMap) {
         user.setUser_id(str);
         System.out.println(str);
+        List<Videos> temp = this.bucketService.listFiles(str);
+        List<String> names = new ArrayList<>();
+        for (Videos videos : temp) {
+            names.add(videos.getVideo());
+        }
+        modelMap.addAttribute("fileList",names);
+        modelMap.addAttribute("str",str);
         return "dashboard";
     }
 

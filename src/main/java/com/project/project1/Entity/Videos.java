@@ -1,7 +1,5 @@
 package com.project.project1.Entity;
 
-import com.sun.xml.internal.messaging.saaj.util.LogDomainConstants;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,16 +7,20 @@ import java.io.Serializable;
 @Table(name = "videos")
 public class Videos implements Serializable {
 
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "videos_id_seq")
+    @SequenceGenerator(name = "videos_id_seq", sequenceName = "videos_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "UId")
+    @Column(name = "uid")
     private String uid;
-    @Column(name = "Video_Name")
+    @Column(name = "video")
     private String video;
 
-    public Videos( String uid, String video){
+
+
+    public Videos(String uid, String video) {
         this.uid = uid;
         this.video = video;
     }
@@ -26,13 +28,13 @@ public class Videos implements Serializable {
     public Videos() {
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getUid() {
         return uid;
@@ -49,4 +51,5 @@ public class Videos implements Serializable {
     public void setVideo(String video) {
         this.video = video;
     }
+
 }

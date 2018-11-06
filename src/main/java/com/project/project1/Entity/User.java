@@ -1,25 +1,35 @@
 package com.project.project1.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "user0_")
+@Table(name = "user")
 public class User {
+
     @Id
-    @Column(name = "user_id")
-    private String user_id;
+    private String uid;
+
+    @ManyToOne
+    @JoinColumn(name = "uid",insertable=false, updatable=false)
+    private Videos videos;
+
+
+    public Videos getVideos() {
+        return videos;
+    }
+
+    public void setVideos(Videos videos) {
+        this.videos = videos;
+    }
 
     public User() {
     }
 
     public String getUser_id() {
-        return user_id;
+        return uid;
     }
 
     public void setUser_id(String user_id) {
-        this.user_id = user_id;
+        this.uid = user_id;
     }
 }

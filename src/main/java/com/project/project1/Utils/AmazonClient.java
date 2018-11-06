@@ -1,5 +1,7 @@
 package com.project.project1.Utils;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.project.project1.Service.URLService;
@@ -7,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.*;
 
 import static org.aspectj.bridge.MessageUtil.info;
@@ -60,9 +65,7 @@ public class AmazonClient {
 
     public void deleteFileFromS3Bucket(String fileName, AmazonS3 s3client) {
 
-//       String fileurl= urlService.getURL(fileUrl).getOriginalURL();
-//        System.out.println(fileurl);
-//        String fileName = fileurl.substring(fileurl.lastIndexOf("/") + 1);
+        System.out.println(fileName);
 
         s3client.deleteObject(new DeleteObjectRequest(bucketName , fileName));
 
@@ -93,4 +96,22 @@ public class AmazonClient {
             }
             return fullObject;
 }
+    public void downloadFile(String keyName, AmazonS3 s3client) throws IOException {
+        try {
+
+            System.out.println("Downloading an object");
+            S3Object s3object = s3client.getObject(new GetObjectRequest(bucketName, keyName));
+            System.out.println("Content-Type: "  + s3object.getObjectMetadata().getContentType()+s3object.getRedirectLocation());
+            final BufferedInputStream i = new BufferedInputStream(s3object.getObjectContent());
+            InputStream objectData = s3object.getObjectContent();
+            Files.copy(objectData, new File("E:\\rimishra\\IdeaProjects\\"+keyName).toPath()); //location to local path
+            objectData.close();
+
+        } catch (AmazonServiceException ase) {
+            System.out.println(ase.getMessage());
+
+        } catch (AmazonClientException ace) {
+
+        }
+    }
 }
