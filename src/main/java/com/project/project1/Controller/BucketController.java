@@ -88,6 +88,17 @@ public class BucketController {
         modelMap.addAttribute("str",str);
         return "dashboard";
     }
+    @GetMapping("/dashboard")
+    public String dashboard(ModelMap modelMap )
+    {
+        List<Videos> temp = this.bucketService.listFiles(user.getUser_id());
+        List<String> names = new ArrayList<>();
+        for (Videos videos : temp) {
+            names.add(videos.getVideo());
+        }
+        modelMap.addAttribute("fileList",names);
+        return "dashboard";
+    }
 
 }
 
